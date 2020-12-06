@@ -35,6 +35,19 @@ func partTwo(numbers []int, expectedSum int) {
 	log.Fatalf("Could not find the correct numbers that sums up to %v", expectedSum)
 }
 
+func convertStringsToNumbers(strings []string) []int {
+	numbers := make([]int, len(strings))
+
+	for index, value := range strings {
+		parsed, err := strconv.Atoi(value)
+		if err != nil {
+			log.Fatal(err)
+		}
+		numbers[index] = parsed
+	}
+	return numbers
+}
+
 func main() {
 	log.Println("Starting day01")
 	content, err := ioutil.ReadFile("input.txt")
@@ -44,15 +57,7 @@ func main() {
 	}
 
 	csv := strings.Split(string(content), "\n")
-	numbers := make([]int, len(csv))
-
-	for index, value := range csv {
-		parsed, err := strconv.Atoi(value)
-		if err != nil {
-			log.Fatal(err)
-		}
-		numbers[index] = parsed
-	}
+	numbers := convertStringsToNumbers(csv)
 
 	expectedSum := 2020
 	partOne(numbers, expectedSum)
